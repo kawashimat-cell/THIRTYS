@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>チーム戦術ガイド｜勝利への青写真</title>
+<style>
+  :root {
+    --navy: #0a1628;
+    --navy-light: #112240;
+    --navy-mid: #1a2f52;
+    --orange: #f97316;
+    --orange-bright: #fb923c;
+    --orange-dark: #c2410c;
+    --text: #e2e8f0;
+    --text-muted: #94a3b8;
+    --border: #1e3a5f;
+    --card-bg: #0f1f3d;
+    --accent-green: #10b981;
+    --radius: 12px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.4);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--navy);
+    color: var(--text);
+    font-family: 'Hiragino Sans', 'Noto Sans JP', 'Yu Gothic UI', sans-serif;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ===== HERO ===== */
+  .hero {
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(249,115,22,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(249,115,22,0.08) 0%, transparent 50%),
+      linear-gradient(135deg, #050d1a 0%, #0a1628 50%, #071222 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(249,115,22,0.03) 0px, rgba(249,115,22,0.03) 1px, transparent 1px, transparent 80px),
+      repeating-linear-gradient(0deg, rgba(249,115,22,0.03) 0px, rgba(249,115,22,0.03) 1px, transparent 1px, transparent 80px);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    padding: 0.4rem 1.2rem;
+    border-radius: 50px;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 7vw, 5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+    background: linear-gradient(135deg, #fff 0%, var(--orange-bright) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    color: var(--text-muted);
+    max-width: 600px;
+    margin-bottom: 3rem;
+  }
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+  }
+  .court-svg {
+    max-width: 600px;
+    margin: 2rem auto 0;
+    filter: drop-shadow(0 8px 24px rgba(249,115,22,0.15));
+  }
+  .hero-tag {
+    background: rgba(249,115,22,0.1);
+    border: 1px solid rgba(249,115,22,0.3);
+    color: var(--orange-bright);
+    padding: 0.35rem 0.9rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  .scroll-hint::after {
+    content: '';
+    width: 2px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--orange), transparent);
+    border-radius: 2px;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(8px); }
+  }
+
+  /* ===== NAV ===== */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10,22,40,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 1rem;
+  }
+  .nav-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 0.6rem 0;
+  }
+  .nav-inner::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 0.4rem 0.9rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+    font-family: inherit;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    background: rgba(249,115,22,0.12);
+    color: var(--orange-bright);
+  }
+
+  /* ===== LAYOUT ===== */
+  main { max-width: 960px; margin: 0 auto; padding: 0 1rem 6rem; }
+
+  .section { padding: 4rem 0 2rem; }
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+  }
+  .section-num {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: white;
+    box-shadow: 0 4px 16px rgba(249,115,22,0.4);
+  }
+  .section-title-block h2 {
+    font-size: clamp(1.4rem, 3.5vw, 2rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.25;
+    margin-bottom: 0.4rem;
+  }
+  .section-title-block p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  .core-concept {
+    background: linear-gradient(135deg, rgba(249,115,22,0.08), rgba(249,115,22,0.04));
+    border: 1px solid rgba(249,115,22,0.25);
+    border-left: 4px solid var(--orange);
+    border-radius: 10px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 2rem;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--orange-bright);
+  }
+  .core-concept span { color: var(--text); font-weight: 400; }
+
+  /* ===== CARDS ===== */
+  .cards { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    cursor: default;
+  }
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 40px rgba(249,115,22,0.2);
+    border-color: rgba(249,115,22,0.4);
+  }
+  .card-icon {
+    font-size: 1.8rem;
+    margin-bottom: 0.8rem;
+    display: block;
+  }
+  .card h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .card p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
+  .card.highlight {
+    background: linear-gradient(135deg, rgba(249,115,22,0.1), rgba(249,115,22,0.04));
+    border-color: rgba(249,115,22,0.3);
+  }
+  .card.highlight h3 { color: var(--orange-bright); }
+
+  /* ===== STEPS ===== */
+  .steps { display: flex; flex-direction: column; gap: 0; }
+  .step {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+    padding: 1.2rem 0;
+    opacity: 0;
+    transform: translateX(-30px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .step.visible { opacity: 1; transform: translateX(0); }
+  .step-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .step-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 0.9rem;
+    color: white;
+    box-shadow: 0 0 16px rgba(249,115,22,0.4);
+    flex-shrink: 0;
+  }
+  .step-line {
+    width: 2px;
+    flex: 1;
+    min-height: 24px;
+    background: linear-gradient(to bottom, rgba(249,115,22,0.4), transparent);
+    margin-top: 4px;
+  }
+  .step:last-child .step-line { display: none; }
+  .step-body { padding-top: 0.5rem; }
+  .step-body strong { color: #fff; font-size: 1rem; display: block; margin-bottom: 0.3rem; }
+  .step-body p { font-size: 0.88rem; color: var(--text-muted); }
+
+  /* ===== ZONE PRINCIPLES ===== */
+  .zone-grid { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .zone-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    text-align: center;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    cursor: default;
+  }
+  .zone-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 16px 48px rgba(249,115,22,0.25);
+    border-color: rgba(249,115,22,0.5);
+  }
+  .zone-num {
+    font-size: 2.5rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--orange), var(--orange-bright));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1;
+    margin-bottom: 0.6rem;
+  }
+  .zone-card h3 { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 0.5rem; }
+  .zone-card p { font-size: 0.82rem; color: var(--text-muted); }
+
+  /* ===== ACCORDION ===== */
+  .accordion { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1.5rem; }
+  .acc-item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .acc-item.open { border-color: rgba(249,115,22,0.4); }
+  .acc-header {
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.2s;
+  }
+  .acc-header:hover { background: rgba(249,115,22,0.05); }
+  .acc-arrow {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: rgba(249,115,22,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background 0.2s;
+    font-size: 0.7rem;
+    color: var(--orange);
+  }
+  .acc-item.open .acc-arrow { transform: rotate(180deg); background: rgba(249,115,22,0.25); }
+  .acc-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .acc-body-inner {
+    padding: 0 1.5rem 1.2rem;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.8;
+    border-top: 1px solid var(--border);
+    padding-top: 1rem;
+  }
+
+  /* ===== LANE VISUAL ===== */
+  .lane-court {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    margin: 2rem 0;
+  }
+  .lane-court h3 { font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 1.5rem; text-align: center; }
+  .court-diagram {
+    background: linear-gradient(180deg, #1a4731 0%, #166534 100%);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    padding: 1.5rem;
+    position: relative;
+    min-height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lanes { display: flex; gap: 1rem; justify-content: center; align-items: flex-end; width: 100%; }
+  .lane {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .lane-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+  }
+  .lane-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: white;
+  }
+  .lane-dot.rebounder { background: var(--orange); box-shadow: 0 0 16px rgba(249,115,22,0.5); }
+  .lane-dot.guard { background: #3b82f6; box-shadow: 0 0 16px rgba(59,130,246,0.5); }
+  .lane-dot.wing { background: #10b981; box-shadow: 0 0 16px rgba(16,185,129,0.5); }
+  .lane-path {
+    font-size: 1.6rem;
+    color: rgba(255,255,255,0.6);
+    animation: moveUp 1.5s ease-in-out infinite;
+  }
+  @keyframes moveUp {
+    0%, 100% { transform: translateY(0); opacity: 0.6; }
+    50% { transform: translateY(-6px); opacity: 1; }
+  }
+  .lane-label { font-size: 0.72rem; color: rgba(255,255,255,0.7); font-weight: 600; text-align: center; }
+  .basket-icon { font-size: 2rem; margin-bottom: 0.5rem; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  /* ===== TOOLTIP ===== */
+  .tip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1.5px dashed rgba(249,115,22,0.5);
+    color: var(--orange-bright);
+    cursor: help;
+    font-style: normal;
+  }
+  .tip::after {
+    content: attr(data-tip);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) scale(0.9);
+    background: #1e3a5f;
+    color: var(--text);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    padding: 0.5rem 0.8rem;
+    border-radius: 8px;
+    white-space: nowrap;
+    max-width: 260px;
+    white-space: normal;
+    width: max-content;
+    max-width: 240px;
+    border: 1px solid rgba(249,115,22,0.3);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    z-index: 10;
+    font-style: normal;
+    font-weight: 400;
+    text-decoration: none;
+  }
+  .tip:hover::after { opacity: 1; transform: translateX(-50%) scale(1); }
+
+  /* ===== VIDEO SECTION ===== */
+  .video-section {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .video-section:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(249,115,22,0.2);
+  }
+  .video-section-header {
+    padding: 1.2rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .video-badge {
+    padding: 0.25rem 0.7rem;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .video-badge.defense { background: rgba(59,130,246,0.2); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+  .video-badge.offense { background: rgba(249,115,22,0.15); color: var(--orange-bright); border: 1px solid rgba(249,115,22,0.3); }
+  .video-title { font-weight: 700; color: #fff; font-size: 1rem; }
+  .video-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  @media (max-width: 768px) { .video-grid { grid-template-columns: 1fr; } }
+
+  /* YouTube リンクボタン方式 */
+  .video-grid { display: flex; flex-direction: column; gap: 0.7rem; }
+  .yt-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: linear-gradient(135deg, #0f1f3d, #1a2f52);
+    border: 1px solid rgba(249,115,22,0.25);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+  }
+  .yt-link:hover, .yt-link:active {
+    transform: translateY(-2px);
+    border-color: rgba(249,115,22,0.6);
+    box-shadow: 0 6px 24px rgba(249,115,22,0.15);
+  }
+  .yt-icon {
+    flex-shrink: 0;
+    width: 48px; height: 48px;
+    background: #ff0000;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 10px rgba(255,0,0,0.4);
+  }
+  .yt-icon::after {
+    content: '';
+    border-left: 18px solid #fff;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    margin-left: 3px;
+  }
+  .yt-info { flex: 1; min-width: 0; }
+  .yt-info-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .yt-info-sub {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+  .yt-arrow {
+    flex-shrink: 0;
+    color: rgba(249,115,22,0.6);
+    font-size: 1.1rem;
+  }
+  .coach-comment {
+    padding: 1rem 1.5rem;
+    background: linear-gradient(135deg, rgba(249,115,22,0.06), transparent);
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+  }
+  .coach-avatar {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+  }
+  .coach-comment-body {}
+  .coach-label { font-size: 0.7rem; color: var(--orange); font-weight: 700; margin-bottom: 0.2rem; letter-spacing: 0.08em; }
+  .coach-comment-text { font-size: 0.88rem; color: var(--text-muted); line-height: 1.7; }
+  .coach-comment-text strong { color: var(--orange-bright); }
+
+  /* ===== MESSAGE ===== */
+  .message-card {
+    background: linear-gradient(135deg, var(--navy-mid), var(--navy-light));
+    border: 1px solid rgba(249,115,22,0.3);
+    border-radius: 16px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .message-card::before {
+    content: '🏀';
+    position: absolute;
+    font-size: 8rem;
+    right: -1rem;
+    top: -1rem;
+    opacity: 0.06;
+    line-height: 1;
+  }
+  .message-card h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #fff;
+    margin-bottom: 1.2rem;
+    line-height: 1.3;
+  }
+  .message-card h3 span { color: var(--orange-bright); }
+  .message-card p { color: var(--text-muted); line-height: 1.9; font-size: 0.95rem; margin-bottom: 1rem; }
+  .message-card p:last-child { margin-bottom: 0; }
+  .highlight-text {
+    color: var(--orange-bright);
+    font-weight: 700;
+  }
+
+  /* ===== FADE-IN ===== */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .fade-in[data-delay="1"] { transition-delay: 0.1s; }
+  .fade-in[data-delay="2"] { transition-delay: 0.2s; }
+  .fade-in[data-delay="3"] { transition-delay: 0.3s; }
+  .fade-in[data-delay="4"] { transition-delay: 0.4s; }
+
+  /* ===== DIVIDER ===== */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+    margin: 2rem 0;
+  }
+
+  /* ===== TAG PILLS ===== */
+  .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  .tag {
+    padding: 0.2rem 0.7rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+  .tag.orange { background: rgba(249,115,22,0.12); color: var(--orange-bright); border: 1px solid rgba(249,115,22,0.2); }
+  .tag.blue { background: rgba(59,130,246,0.12); color: #60a5fa; border: 1px solid rgba(59,130,246,0.2); }
+  .tag.green { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.2); }
+
+  /* ===== FOOTER ===== */
+  footer {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+  }
+  footer strong { color: var(--orange); }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 2rem; }
+    .hero-sub { font-size: 0.9rem; }
+    main { padding: 0 0.8rem 4rem; }
+    .section { padding: 2.5rem 0 1.5rem; }
+    .section-header { flex-direction: column; gap: 0.6rem; align-items: flex-start; }
+    .section-num { width: 40px; height: 40px; font-size: 1rem; }
+    .section-title-block h2 { font-size: 1.2rem; }
+    .cards { grid-template-columns: 1fr; gap: 1rem; }
+    .zone-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .nav-inner { gap: 0.15rem; padding: 0.5rem 0; }
+    .nav-btn { padding: 0.35rem 0.7rem; font-size: 0.7rem; }
+    .message-card { padding: 1.5rem; }
+    .message-card h3 { font-size: 1.2rem; margin-bottom: 0.8rem; }
+    .coach-comment { padding: 0.8rem; gap: 0.6rem; }
+    .coach-avatar { width: 32px; height: 32px; }
+    .video-wrapper { padding-bottom: 56.25%; }
+    .lane-dot { width: 32px; height: 32px; font-size: 0.65rem; }
+  }
+  @media (max-width: 640px) {
+    .cards { grid-template-columns: 1fr; }
+    .zone-grid { grid-template-columns: 1fr; }
+    .video-grid { grid-template-columns: 1fr; }
+    .section-header { gap: 0.8rem; }
+    .section-num { width: 36px; height: 36px; font-size: 0.9rem; }
+    .lanes { gap: 0.4rem; }
+    .core-concept { padding: 1rem 1.2rem; font-size: 0.95rem; }
+    .step-dot { width: 36px; height: 36px; font-size: 0.8rem; }
+    .hero-badge { font-size: 0.65rem; padding: 0.3rem 0.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-badge">🏀 Team Tactics Guide 2025</div>
+  <h1>サーティーズの<br>方針</h1>
+  <p class="hero-sub">
+    運動量という武器を最大化し、弱点を克服して<br>
+    上位リーグ昇格を掴み取るための、チーム戦術完全ガイド
+  </p>
+  <div class="hero-tags">
+    <span class="hero-tag">🛡️ ヘルプディフェンス</span>
+    <span class="hero-tag">📦 ボックスアウト</span>
+    <span class="hero-tag">⚡ 速攻</span>
+    <span class="hero-tag">🎯 ゾーン攻略</span>
+  </div>
+  <div class="scroll-hint">SCROLL</div>
+</section>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <button class="nav-btn" onclick="scrollTo('s1')">01 ディフェンス</button>
+    <button class="nav-btn" onclick="scrollTo('s2')">02 速攻</button>
+    <button class="nav-btn" onclick="scrollTo('s3')">03 ゾーン攻略</button>
+    <button class="nav-btn" onclick="scrollTo('s4')">04 動画 & メッセージ</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ========== SECTION 1 ========== -->
+<section class="section" id="s1">
+  <div class="section-header fade-in">
+    <div class="section-num">01</div>
+    <div class="section-title-block">
+      <h2>ディフェンスの鉄則<br>強固なマンツーマン＋ボックスアウト</h2>
+      <p>全員で守り切り、セカンドチャンスを与えない</p>
+    </div>
+  </div>
+
+  <div class="core-concept fade-in" data-delay="1">
+    🔒 コアコンセプト：<span>「全員で守り切り、セカンドチャンスを与えない。1つのボックスアウトが試合を決める。」</span>
+  </div>
+
+  <div class="tag-row fade-in" data-delay="2">
+    <span class="tag blue">ヘルプディフェンス</span>
+    <span class="tag blue">ローテーション</span>
+    <span class="tag orange">ボックスアウト</span>
+  </div>
+
+  <div class="cards fade-in" data-delay="2">
+    <div class="card highlight">
+      <span class="card-icon">🎯</span>
+      <h3>ボール保持者へのプレッシャー</h3>
+      <p>ボールマンには常に<em class="tip" data-tip="ドリブルの進路に素早く回り込み、相手の視野と突破口を塞ぐディフェンス技術">クローズアウト</em>を徹底。ドライブコースを塞ぎ、外のシュートに強くプレッシャーをかける。手を出してファウルするのは厳禁 — フィートワークで守れ。</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🔄</span>
+      <h3>カバーリングとローテーション</h3>
+      <p>ドライブ時は<em class="tip" data-tip="ボールマンに突破されたとき、隣のディフェンダーがずれてカバーに入ること。ここからズレが生まれ、連鎖的に全員がポジションをシフトする">ヘルプ</em>に入り、残った選手が<em class="tip" data-tip="ヘルプに行った選手の担当マーカーをカバーするために他の選手が位置をずらす動き">ローテーション</em>で埋める。「誰かやるだろう」はNG。声を出して確認しながら動く。</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">📡</span>
+      <h3>ディナイとオフボールディフェンス</h3>
+      <p>ボールのない局面でも気を抜かない。1パスアウェイの選手には<em class="tip" data-tip="相手のキャッチを防ぐため、パスコースに腕を入れてボールを受けさせないポジション取り">ディナイ</em>ポジションを取り、2パス以上離れたらゴール側のヘルプポジションへ。</p>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <h3 style="color:#fff; font-size:1.15rem; font-weight:700; margin-bottom:1.5rem;" class="fade-in">
+    📦 ボックスアウト完全マスター — ステップ別アクション
+  </h3>
+
+  <div class="steps fade-in" data-delay="1">
+    <div class="step">
+      <div class="step-connector">
+        <div class="step-dot">1</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <strong>シュートが放たれた瞬間 — まず「回れ」</strong>
+        <p>ボールを目で追う前に、自分のマークマンを探す。シュートアテンプトと同時に体の向きを変える。リバウンドの勝負は<em class="tip" data-tip="シュートが打たれた瞬間から始まるポジション争いのこと">この0.5秒</em>で決まる。</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-connector">
+        <div class="step-dot">2</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <strong>体を当てる（コンタクトする） — お尻でブロック</strong>
+        <p>マークマンとバスケットの間に自分の体を割り込ませる。肘を広げ、お尻と背中でしっかりコンタクト。<em class="tip" data-tip="攻撃側のリバウンドを防ぐため、守備側がマークマンとゴールの間に体を入れてブロックすること">ボックスアウト</em>の正しい姿勢はスクワットの低い重心。手を使うのはファウルになる。</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-connector">
+        <div class="step-dot">3</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <strong>キープしながらボールを見る</strong>
+        <p>コンタクトを維持しながら、ボールの落下点を目で追う。相手が動いたら足で追いかけてポジションをキープ。手放したら負け。</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-connector">
+        <div class="step-dot">4</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-body">
+        <strong>両手でキャッチ — 即アウトレット</strong>
+        <p>リバウンドは両手で「ガッ」とつかむ。片手チップは禁止。キャッチと同時にコーチン（<em class="tip" data-tip="リバウンド後のパスを受けるために開いたガードに向かって叫ぶ合図の声">「もらった！」</em>）の声でガードへアウトレットパス。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion fade-in" data-delay="3">
+    <div class="acc-item">
+      <button class="acc-header" onclick="toggleAcc(this)">
+        💡 用語解説：ヘルプサイド・リム・アングル
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <p><strong style="color:var(--orange-bright)">ヘルプサイド（Help Side）</strong>：ボールから離れた側（弱サイド）。ここのディフェンスはゴール近くに引いてカバーできるポジションを取る。<br><br>
+          <strong style="color:var(--orange-bright)">リム（Rim）</strong>：バスケットのリング部分。「リムへアタック」＝ゴール下へ突っ込む動き。<br><br>
+          <strong style="color:var(--orange-bright)">アングル（Angle）</strong>：シュートやパスの角度・方向。「アングルを変える」＝相手の攻撃ルートを変えさせる守備対応。</p>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-header" onclick="toggleAcc(this)">
+        ⚠️ よくあるミス：こんなボックスアウトはNG
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <p>❌ シュートと同時にボールを目で追う → 体を入れる前に相手に抜かれる<br>
+          ❌ 立ったままボックスアウト → 相手に押し込まれて負ける。重心を下げること<br>
+          ❌ コンタクト後すぐ離れる → リバウンドが取れるまでキープし続ける<br>
+          ❌ 「誰かがやる」と思う → 5人全員が自分のマークマンをブロックする意識を持つ</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 2 ========== -->
+<section class="section" id="s2">
+  <div class="section-header fade-in">
+    <div class="section-num">02</div>
+    <div class="section-title-block">
+      <h2>強みを活かす<br>リバウンドからアーリーオフェンスへ</h2>
+      <p>運動量で相手を凌駕する — 速攻はチームの最大武器</p>
+    </div>
+  </div>
+
+  <div class="core-concept fade-in" data-delay="1">
+    ⚡ コアコンセプト：<span>「守備が終わった瞬間に攻撃が始まる。体力と運動量こそが最強の戦術だ。」</span>
+  </div>
+
+  <div class="cards fade-in" data-delay="2">
+    <div class="card highlight">
+      <span class="card-icon">📤</span>
+      <h3>アウトレットパスを素早く</h3>
+      <p>リバウンドを取ったらすぐさまサイドラインのガードへ<em class="tip" data-tip="リバウンド後、素早く速攻に移るためにガードへ投げる最初のパス。サイドラインのFT延長線上が理想的な受け位置">アウトレットパス</em>。ドリブルで運ぶ時間を省く。コーチンの声が聞こえたら迷わず投げる。</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🏃</span>
+      <h3>サイドラインを駆け上がる</h3>
+      <p>フロントコートのウイングは、シュートが打たれた瞬間に走り出す。ボールを持ってからでは遅い。ディフェンスが揃う前に走り抜けることが速攻成立の条件。</p>
+    </div>
+    <div class="card">
+      <span class="card-icon">🎯</span>
+      <h3>数的優位を作る</h3>
+      <p>速攻の黄金律は<em class="tip" data-tip="攻撃側3人対守備側2人（または2対1）の数的優位な状況。この状況では必ず得点できる">3対2・2対1</em>の状況を作ること。数的優位ならシュートを選ばずパスをはたく。<em class="tip" data-tip="速攻で最後にシュートをせず余分なパスをはたいて確実なシュートチャンスを作るパス">エキストラパス</em>が最終決定力を上げる。</p>
+    </div>
+  </div>
+
+  <div class="lane-court fade-in" data-delay="3">
+    <h3>🏀 3メンのレーンフィル — 走るコースの基本</h3>
+    <div class="court-diagram">
+      <div style="position:absolute;top:10px;left:50%;transform:translateX(-50%);font-size:0.7rem;color:rgba(255,255,255,0.5);">--- 相手ゴール ---</div>
+      <div class="lanes">
+        <div class="lane">
+          <div class="lane-dot wing">WG</div>
+          <div class="lane-arrow">
+            <div class="lane-path">↑</div>
+            <div class="lane-path" style="animation-delay:0.3s">↑</div>
+          </div>
+          <div class="lane-label">左ウイング<br>サイドラインを走る</div>
+        </div>
+        <div class="lane" style="align-items:center;">
+          <div style="text-align:center;margin-bottom:0.5rem;">
+            <div class="basket-icon">🏀</div>
+          </div>
+          <div class="lane-dot rebounder">PF</div>
+          <div class="lane-arrow">
+            <div class="lane-path">↑</div>
+            <div class="lane-path" style="animation-delay:0.5s">↑</div>
+          </div>
+          <div class="lane-label">リバウンダー<br>中央レーンで追い越す</div>
+        </div>
+        <div class="lane">
+          <div class="lane-dot guard">PG</div>
+          <div class="lane-arrow">
+            <div class="lane-path">↑</div>
+            <div class="lane-path" style="animation-delay:0.1s">↑</div>
+          </div>
+          <div class="lane-label">ガード<br>ボール受けて先行</div>
+        </div>
+        <div class="lane">
+          <div class="lane-dot wing" style="background:#8b5cf6">SF</div>
+          <div class="lane-arrow">
+            <div class="lane-path">↑</div>
+            <div class="lane-path" style="animation-delay:0.7s">↑</div>
+          </div>
+          <div class="lane-label">右ウイング<br>逆サイドを走る</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion fade-in" data-delay="3">
+    <div class="acc-item">
+      <button class="acc-header" onclick="toggleAcc(this)">
+        📋 速攻の判断基準 — 「走る」か「セットする」かの見極め
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <p><strong style="color:#34d399">✅ 走るべき状況</strong>：アウトレットを受けてハーフコートを超えたとき相手が2人以下 / ウイングがフリーで先行している<br><br>
+          <strong style="color:#f87171">⚠️ セットに切り替える状況</strong>：ドリブルで進んで相手に追いつかれている / ウイングが揃っていない / 無理なシュートより<em class="tip" data-tip="速攻がつぶれた後、通常のハーフコートオフェンスに移行すること">アーリーオフェンス</em>に切り替える<br><br>
+          <strong style="color:var(--orange-bright)">共通ルール</strong>：「走り得」はない。無謀な速攻は<em class="tip" data-tip="相手が速攻のボールを奪ってそのまま逆方向に得点されること">逆速攻</em>のリスク。判断スピードが一番大事。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 3 ========== -->
+<section class="section" id="s3">
+  <div class="section-header fade-in">
+    <div class="section-num">03</div>
+    <div class="section-title-block">
+      <h2>弱点克服<br>ゾーンディフェンスの簡単攻略</h2>
+      <p>パスを回し、ズレを作って簡単に得点する</p>
+    </div>
+  </div>
+
+  <div class="core-concept fade-in" data-delay="1">
+    🎯 コアコンセプト：<span>「ゾーンは怖くない。動かすのはボールだ。脚を使わず頭を使え。」</span>
+  </div>
+
+  <div class="zone-grid fade-in" data-delay="2">
+    <div class="zone-card">
+      <div class="zone-num">01</div>
+      <h3>ギャップを攻める</h3>
+      <p><em class="tip" data-tip="ゾーンの守備者と守備者の間にできる隙間。パスをここに通すとゾーンが崩れる">ギャップ（間）</em>へ積極的にパスを通す。ゾーンの選手に触らせず、隙間だけを狙って回す。</p>
+    </div>
+    <div class="zone-card">
+      <div class="zone-num">02</div>
+      <h3>オーバーロードの形成</h3>
+      <p><em class="tip" data-tip="ゾーンの一側面に攻撃側が多く集まり、数的優位を作る戦術">オーバーロード</em>で片側に人数を集中させ、守備者が対応しきれないエリアを意図的に作る。</p>
+    </div>
+    <div class="zone-card">
+      <div class="zone-num">03</div>
+      <h3>ハイ＆ローポストのフラッシュ</h3>
+      <p>ゾーンの弱点はペイント内の<em class="tip" data-tip="フリースローレーン内の中距離エリア。ゾーンが開くハイポストへ飛び込む動きをフラッシュという">ハイ＆ローポスト</em>。ここに飛び込む（フラッシュ）動きでゾーンを崩す。</p>
+    </div>
+    <div class="zone-card">
+      <div class="zone-num">04</div>
+      <h3>クイックパス回し</h3>
+      <p>ゾーンはパスに反応して動く。ボールを持ちすぎず、<em class="tip" data-tip="すべてのパスオプションを使い、より良い選択肢を作ってからシュートするパス">エキストラパス</em>を意識して次の次を考えてパスを回す。</p>
+    </div>
+  </div>
+
+  <div class="accordion fade-in" data-delay="3" style="margin-top:1.5rem">
+    <div class="acc-item">
+      <button class="acc-header" onclick="toggleAcc(this)">
+        📐 2-3ゾーン攻略のセオリー
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <p><strong style="color:var(--orange-bright)">基本形</strong>：トップにボールを持ち、ウイングへパス → 逆ウイングへスキップパス → コーナーマンがコーナーでキャッチ → ここでハイポストへパスすると<em class="tip" data-tip="相手ディフェンダーの間にできるシュートコース。オープンな状況でシュートできる">オープンレーン</em>が生まれる。<br><br>
+          <strong style="color:var(--orange-bright)">キーポイント</strong>：コーナーに人を置く。コーナーは2-3ゾーンの最大の弱点。フロントの3人がコーナーのマークのために動くと、バックの2人が引き伸ばされてゴール下が空く。</p>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-header" onclick="toggleAcc(this)">
+        📐 1-3-1ゾーン攻略のセオリー
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <p><strong style="color:var(--orange-bright)">弱点の場所</strong>：コーナーとハイポストの両脇（ウイングエリア）が最も手薄。<br><br>
+          <strong style="color:var(--orange-bright)">攻め方</strong>：ウイングへ素早いパス → ハイポストへフラッシュ → コーナーへ展開 → ここで数的優位を作ってシュートか<em class="tip" data-tip="ゴール下のエリアに飛び込む動きでパスをもらう技術">ローポストフラッシュ</em>に合わせる。</p>
+        </div>
+      </div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-header" onclick="toggleAcc(this)">
+        ❌ ゾーン相手のNG行動リスト
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-body-inner">
+          <p>❌ ゾーンの「人」に向かってドライブ → 必ずヘルプが来る。人ではなくスペースへ仕掛ける<br>
+          ❌ ゾーンの外から打ち続ける → 確率が下がるし、ゾーンを崩せない。パスで中を崩してから<br>
+          ❌ トップで止まってパスを探す → ゾーンが整って守りやすくなる。常にムーブメント<br>
+          ❌ 5人がアウトサイドに広がる → ゾーンを楽にするだけ。インサイドに人を送れ</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SECTION 4 ========== -->
+<section class="section" id="s4">
+  <div class="section-header fade-in">
+    <div class="section-num">04</div>
+    <div class="section-title-block">
+      <h2>戦術動画 & コーチからのメッセージ</h2>
+      <p>動画でイメージを叩き込み、試合日にフルパワーで出力する</p>
+    </div>
+  </div>
+
+  <!-- VIDEO GROUP A -->
+  <div class="video-section fade-in" data-delay="1">
+    <div class="video-section-header">
+      <span class="video-badge defense">DEFENSE & FAST BREAK</span>
+      <span class="video-title">動画グループA：ディフェンス・ボックスアウト・速攻</span>
+    </div>
+    <div class="video-grid">
+      <a class="yt-link" href="https://youtube.com/shorts/4vLpBwwQL8w" target="_blank" rel="noopener">
+        <div class="yt-icon"></div>
+        <div class="yt-info">
+          <div class="yt-info-title">ディフェンス基礎・ヘルプローテーション</div>
+          <div class="yt-info-sub">YouTubeで開く</div>
+        </div>
+        <div class="yt-arrow">›</div>
+      </a>
+      <a class="yt-link" href="https://www.youtube.com/watch?v=qBYp21nf7SI" target="_blank" rel="noopener">
+        <div class="yt-icon"></div>
+        <div class="yt-info">
+          <div class="yt-info-title">ボックスアウト・リバウンド</div>
+          <div class="yt-info-sub">YouTubeで開く</div>
+        </div>
+        <div class="yt-arrow">›</div>
+      </a>
+      <a class="yt-link" href="https://www.youtube.com/watch?v=AIcmz_n8s_E" target="_blank" rel="noopener">
+        <div class="yt-icon"></div>
+        <div class="yt-info">
+          <div class="yt-info-title">速攻・アーリーオフェンス</div>
+          <div class="yt-info-sub">YouTubeで開く</div>
+        </div>
+        <div class="yt-arrow">›</div>
+      </a>
+      <a class="yt-link" href="https://www.youtube.com/watch?v=j1_KxD2YcQQ" target="_blank" rel="noopener">
+        <div class="yt-icon"></div>
+        <div class="yt-info">
+          <div class="yt-info-title">レーンフィル・速攻の走り方</div>
+          <div class="yt-info-sub">YouTubeで開く</div>
+        </div>
+        <div class="yt-arrow">›</div>
+      </a>
+    </div>
+    <div class="coach-comment">
+      <div class="coach-avatar">🏋️</div>
+      <div class="coach-comment-body">
+        <div class="coach-label">COACH'S POINT</div>
+        <p class="coach-comment-text">
+          <strong>0:00〜1:30あたりのボックスアウトの「体の当て方」を繰り返し見てほしい。</strong>
+          手を使わず、お尻と背中でコンタクトする感覚を頭に焼き付けろ。速攻のシーンでは
+          <strong>「ボールをキャッチした瞬間に誰がどこを走っているか」</strong>に注目。
+          ウイングが先に走っているチームは必ずアーリーオフェンスで得点できている。
+          うちのチームが速攻で点が取れない原因は「走り出しが1秒遅い」それだけだ。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIDEO GROUP B -->
+  <div class="video-section fade-in" data-delay="2">
+    <div class="video-section-header">
+      <span class="video-badge offense">ZONE OFFENSE</span>
+      <span class="video-title">動画グループB：ゾーンディフェンス攻略</span>
+    </div>
+    <div class="video-grid">
+      <a class="yt-link" href="https://www.youtube.com/watch?v=MmuBiPeNOWo" target="_blank" rel="noopener">
+        <div class="yt-icon"></div>
+        <div class="yt-info">
+          <div class="yt-info-title">ゾーンディフェンス攻略①</div>
+          <div class="yt-info-sub">YouTubeで開く</div>
+        </div>
+        <div class="yt-arrow">›</div>
+      </a>
+      <a class="yt-link" href="https://www.youtube.com/watch?v=gYOIXkskAm8" target="_blank" rel="noopener">
+        <div class="yt-icon"></div>
+        <div class="yt-info">
+          <div class="yt-info-title">ゾーンディフェンス攻略②</div>
+          <div class="yt-info-sub">YouTubeで開く</div>
+        </div>
+        <div class="yt-arrow">›</div>
+      </a>
+      <a class="yt-link" href="https://www.youtube.com/watch?v=DuxzRfUbKOE" target="_blank" rel="noopener">
+        <div class="yt-icon"></div>
+        <div class="yt-info">
+          <div class="yt-info-title">ゾーンディフェンス攻略③</div>
+          <div class="yt-info-sub">YouTubeで開く</div>
+        </div>
+        <div class="yt-arrow">›</div>
+      </a>
+    </div>
+    <div class="coach-comment">
+      <div class="coach-avatar">📋</div>
+      <div class="coach-comment-body">
+        <div class="coach-label">COACH'S POINT</div>
+        <p class="coach-comment-text">
+          ゾーンを見たとたんにパスが止まってしまうのが今のうちの最大の弱点だ。
+          <strong>「ゾーンは動かし続けるほど崩れる」</strong>——この感覚を動画でつかんでほしい。
+          特にコーナーへのパスのあとに何が起きるか。ボールを動かしながら
+          <strong>ハイポストへのフラッシュのタイミング</strong>を見逃すな。
+          動画のように「迷いなくパスを出せる」ようになるまで、頭の中で繰り返しイメージしろ。
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider fade-in"></div>
+
+  <!-- MESSAGE -->
+  <div class="message-card fade-in" data-delay="1">
+    <h3>
+      20代も50代も関係ない。<br>
+      <span>判断力と選択、それから運動量</span>。これが俺たちのアイデンティティだ。
+    </h3>
+    <p>
+      良いゲームをする。これが俺たちの方針だ。
+      <span class="highlight-text">限られた練習時間の中で、全員が同じ「判断」「選択」「行動」ができるチーム</span>。
+      それができれば、試合で確実に光る。
+    </p>
+    <p>
+      ディフェンスのリバウンドを1本多く取ると試合が変わる。
+      ゾーンを一つのパスで崩すと相手が動揺する。
+      全員が方針に沿って動けば、自然と勝負は引き寄せられる。
+    </p>
+    <p>
+      20代のメンバーは<span class="highlight-text">足と反応で体現しろ</span>。
+      30〜50代のベテランは<span class="highlight-text">読みと経験でチームを導け</span>。
+      どのポジション、どの年代にも役割がある。どの役割も必須だ。
+    </p>
+    <p>
+      この戦術ガイドは、<span class="highlight-text">練習時間が限られた中で、全員が同じ判断・同じ選択・同じ行動ができるための青写真</span>だ。
+      試合で良いゲームを作る。それがすべてだ。全力でいこう。🏀
+    </p>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p><strong>チーム戦術ガイド 2026</strong> — All Rights Reserved</p>
+  <p style="margin-top:0.4rem">このガイドはチームメンバー専用です。外部への転送・共有はご遠慮ください。</p>
+</footer>
+
+<script>
+  // ===== SCROLL TO =====
+  function scrollTo(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ===== INTERSECTION OBSERVER (FADE-IN) =====
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ===== STEP ANIMATION =====
+  const stepObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const steps = entry.target.querySelectorAll('.step');
+        steps.forEach((step, i) => {
+          setTimeout(() => step.classList.add('visible'), i * 180);
+        });
+        stepObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.steps').forEach(el => stepObserver.observe(el));
+
+  // ===== ACCORDION =====
+  function toggleAcc(btn) {
+    const item = btn.closest('.acc-item');
+    const body = item.querySelector('.acc-body');
+    const isOpen = item.classList.contains('open');
+
+    // Close all
+    document.querySelectorAll('.acc-item.open').forEach(open => {
+      open.classList.remove('open');
+      open.querySelector('.acc-body').style.maxHeight = '0';
+    });
+
+    if (!isOpen) {
+      item.classList.add('open');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  }
+
+  // ===== NAV ACTIVE STATE =====
+  const sections = document.querySelectorAll('.section');
+  const navBtns = document.querySelectorAll('.nav-btn');
+
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        navBtns.forEach(btn => {
+          btn.classList.remove('active');
+          if (btn.getAttribute('onclick').includes(id)) {
+            btn.classList.add('active');
+          }
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => navObserver.observe(s));
+
+</script>
+</body>
+</html>
